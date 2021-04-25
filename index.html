@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <title>pinta y colorea</title>
+
+  <style>
+    body {
+      overscroll-behavior: none;
+    }
+
+    canvas {
+      width: 400px;
+      max-width: 100%;
+    }
+
+    ul.colors {
+      list-style-type: none;
+      margin: 10px 0;
+      padding: 0;
+      width: 100%;
+      height: 50px;
+      display: flex;
+      align-items: stretch;
+      justify-content: stretch;
+
+    }
+
+    ul.colors li {
+      margin: 5px;
+      border: 2px solid #e5e6e7;
+      max-width: 36px;
+      flex-grow: 1;
+    }
+
+    ul.colors li.selected {
+      border: 2px solid black;
+    }
+
+    ul.tools {
+      list-style-type: none;
+      padding: 10px;
+      display: flex;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+    }
+
+    ul.tools button {
+      border-radius: 10px;
+      background: white;
+      border: 2px solid #e5e6e7;
+      height: 50px;
+      width: 50px;
+    }
+
+    ul.tools button img {
+      max-width: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <ul class="colors"></ul>
+  <canvas id="draw"></canvas>
+  <ul class="tools">
+    <li>
+      <button id="clear"><img src="eraser.svg"></button>
+      <button id="changeimage"><img src="refresh.svg"></button>
+    </li>
+  </ul>
+  <script src="index.js"></script>
+</body>
+
+</html>
