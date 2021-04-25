@@ -1,0 +1,25 @@
+{
+  "name": "pinta-y-colorea",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "concurrently \"tsc -w\" \"live-server . --ignore=./src\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jmhdez/colors.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jmhdez/colors/issues"
+  },
+  "homepage": "https://github.com/jmhdez/colors#readme",
+  "devDependencies": {
+    "concurrently": "^6.0.2",
+    "live-server": "^1.2.1",
+    "typescript": "^4.2.4"
+  }
+}

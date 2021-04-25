@@ -1,6 +1,7 @@
 const canvas = document.getElementsByTagName('canvas')[0];
-const ctx = canvas.getContext('2d');
-const clearBtn = document.getElementById('clear');
+const ctx = canvas.getContext('2d')!;
+const clearBtn = document.getElementById('clear')!;
+const changeImageBtn = document.getElementById('changeimage')!;
 
 const image = new Image();
 
@@ -28,7 +29,7 @@ clearBtn.addEventListener('click', () => {
 })
 
 
-document.getElementById('changeimage').addEventListener('click', () => {
+changeImageBtn.addEventListener('click', () => {
   let newImage = '';
   do {
     const index = Math.floor(Math.random() * allImages.length);
@@ -50,7 +51,7 @@ function loadImage() {
 }
 
 function setupColors() {
-  const ul = document.querySelector('.colors');
+  const ul = document.querySelector('.colors')!;
   for (const color of allColors) {
     const li = document.createElement('li');
     li.style.backgroundColor = color;
@@ -62,13 +63,13 @@ function setupColors() {
     ul.appendChild(li);
   }
   selectedColor = allColors[0];
-  document.querySelector('ul.colors li').classList.add('selected');
+  document.querySelector('ul.colors li')!.classList.add('selected');
 }
 
-let lastX = undefined;
-let lastY = undefined;
+let lastX: number | undefined = undefined;
+let lastY: number | undefined = undefined;
 
-function toCanvasPoint(clientX, clientY) {
+function toCanvasPoint(clientX: number, clientY: number) {
   const { left, top, width } = canvas.getBoundingClientRect();
 
   const unscaledX = clientX - left;
@@ -81,26 +82,22 @@ function toCanvasPoint(clientX, clientY) {
   return { x, y }
 }
 
-function beginPaint(clientX, clientY) {
+function beginPaint(clientX: number, clientY: number) {
   dragging = true;
   const { x, y } = toCanvasPoint(clientX, clientY);
   lastX = x;
   lastY = y;
 }
 
-function endPaint(_clientX, _clientY) {
+function endPaint(_clientX: number, _clientY: number) {
   dragging = false;
   lastX = undefined;
   lastY = undefined;
 }
 
-function paint(clientX, clientY) {
+function paint(clientX: number, clientY: number) {
   if (!dragging)
     return;
-
-  // TODO: Cambiar lo de pintar un círculo por una línea que
-  // va desde el último, poniendo el estilo de línea gordo y 
-  // redondo
 
   const { x, y } = toCanvasPoint(clientX, clientY);
 
