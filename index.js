@@ -7,7 +7,7 @@ const image = new Image();
 const allColors = ['red', 'orange', 'yellow', 'limegreen', 'blue', 'pink', 'purple', 'white', 'black'];
 let selectedColor = 'red';
 
-const allImages = ['unicorn.png', 'mermaid.png', 'tiana.png', 'bear.png'];
+const allImages = ['unicorn.png', 'mermaid.png', 'tiana.png', 'bear.png', 'deer.png'];
 let selectedImage = 'unicorn.png';
 
 let dragging = false;
@@ -29,8 +29,13 @@ clearBtn.addEventListener('click', () => {
 
 
 document.getElementById('changeimage').addEventListener('click', () => {
-  const index = Math.floor(Math.random() * allImages.length);
-  selectedImage = allImages[index];
+  let newImage = '';
+  do {
+    const index = Math.floor(Math.random() * allImages.length);
+    newImage = allImages[index];
+  } while (newImage === selectedImage);
+
+  selectedImage = newImage;
   loadImage();
 })
 
