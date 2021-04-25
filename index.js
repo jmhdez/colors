@@ -7,7 +7,7 @@ const image = new Image();
 const allColors = ['red', 'orange', 'yellow', 'limegreen', 'blue', 'pink', 'purple', 'white', 'black'];
 let selectedColor = 'red';
 
-const allImages = ['unicorn.png', 'mermaid.png', 'tiana.png'];
+const allImages = ['unicorn.png', 'mermaid.png', 'tiana.png', 'bear.png'];
 let selectedImage = 'unicorn.png';
 
 let dragging = false;
