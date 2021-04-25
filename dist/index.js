@@ -54,7 +54,10 @@ function setupColors() {
         li.style.backgroundColor = color;
         li.addEventListener('click', function (_) {
             selectedColor = color;
-            document.querySelectorAll('ul.colors li').forEach(function (x) { return x.classList.remove('selected'); });
+            // Soportar Safari antiguo es lo que tiene
+            var colors = document.querySelectorAll('ul.colors li');
+            for (var i = 0; i < colors.length; i++)
+                colors[i].classList.remove('selected');
             li.classList.add('selected');
         });
         ul.appendChild(li);

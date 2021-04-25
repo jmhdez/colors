@@ -57,7 +57,10 @@ function setupColors() {
     li.style.backgroundColor = color;
     li.addEventListener('click', _ => {
       selectedColor = color;
-      document.querySelectorAll('ul.colors li').forEach(x => x.classList.remove('selected'));
+      // Soportar Safari antiguo es lo que tiene
+      const colors = document.querySelectorAll('ul.colors li');
+      for (let i = 0; i < colors.length; i++)
+        colors[i].classList.remove('selected');
       li.classList.add('selected');
     })
     ul.appendChild(li);
