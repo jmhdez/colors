@@ -5,7 +5,7 @@ const changeImageBtn = document.getElementById('changeimage')!;
 
 const image = new Image();
 
-const allColors = ['red', 'orange', 'yellow', 'limegreen', 'blue', 'pink', 'purple', 'white', 'black'];
+const allColors = ['red', 'orange', 'yellow', 'limegreen', 'blue', 'pink', 'purple', 'brown', 'white', 'black'];
 let selectedColor = 'red';
 
 const allImages = ['unicorn.png', 'mermaid.png', 'tiana.png', 'bear.png', 'deer.png'];
