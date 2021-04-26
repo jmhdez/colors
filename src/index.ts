@@ -16,12 +16,30 @@ let dragging = false;
 loadImage();
 setupColors();
 
-canvas.addEventListener('mousedown', ({ clientX, clientY }) => beginPaint(clientX, clientY));
-canvas.addEventListener('touchstart', e => beginPaint(e.touches[0].clientX, e.touches[0].clientY));
-canvas.addEventListener('mouseup', ({ clientX, clientY }) => endPaint(clientX, clientY));
-canvas.addEventListener('touchend', e => endPaint(e.touches[0].clientX, e.touches[0].clientY));
-canvas.addEventListener('mousemove', ({ clientX, clientY }) => paint(clientX, clientY));
-canvas.addEventListener('touchmove', e => paint(e.touches[0].clientX, e.touches[0].clientY));
+canvas.addEventListener('mousedown', ({ clientX, clientY, preventDefault }) => {
+  beginPaint(clientX, clientY);
+  preventDefault();
+});
+canvas.addEventListener('touchstart', e => {
+  beginPaint(e.touches[0].clientX, e.touches[0].clientY);
+  e.preventDefault();
+});
+canvas.addEventListener('mouseup', ({ clientX, clientY, preventDefault }) => {
+  endPaint(clientX, clientY);
+  preventDefault();
+});
+canvas.addEventListener('touchend', e => {
+  endPaint(e.touches[0].clientX, e.touches[0].clientY);
+  e.preventDefault();
+});
+canvas.addEventListener('mousemove', ({ clientX, clientY, preventDefault }) => {
+  paint(clientX, clientY);
+  preventDefault();
+});
+canvas.addEventListener('touchmove', e => {
+  paint(e.touches[0].clientX, e.touches[0].clientY);
+  e.preventDefault();
+});
 
 clearBtn.addEventListener('click', () => {
   ctx.clearRect(0, 0, canvas.width, canvas.height);

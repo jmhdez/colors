@@ -12,20 +12,32 @@ var dragging = false;
 loadImage();
 setupColors();
 canvas.addEventListener('mousedown', function (_a) {
-    var clientX = _a.clientX, clientY = _a.clientY;
-    return beginPaint(clientX, clientY);
+    var clientX = _a.clientX, clientY = _a.clientY, preventDefault = _a.preventDefault;
+    beginPaint(clientX, clientY);
+    preventDefault();
 });
-canvas.addEventListener('touchstart', function (e) { return beginPaint(e.touches[0].clientX, e.touches[0].clientY); });
+canvas.addEventListener('touchstart', function (e) {
+    beginPaint(e.touches[0].clientX, e.touches[0].clientY);
+    e.preventDefault();
+});
 canvas.addEventListener('mouseup', function (_a) {
-    var clientX = _a.clientX, clientY = _a.clientY;
-    return endPaint(clientX, clientY);
+    var clientX = _a.clientX, clientY = _a.clientY, preventDefault = _a.preventDefault;
+    endPaint(clientX, clientY);
+    preventDefault();
 });
-canvas.addEventListener('touchend', function (e) { return endPaint(e.touches[0].clientX, e.touches[0].clientY); });
+canvas.addEventListener('touchend', function (e) {
+    endPaint(e.touches[0].clientX, e.touches[0].clientY);
+    e.preventDefault();
+});
 canvas.addEventListener('mousemove', function (_a) {
-    var clientX = _a.clientX, clientY = _a.clientY;
-    return paint(clientX, clientY);
+    var clientX = _a.clientX, clientY = _a.clientY, preventDefault = _a.preventDefault;
+    paint(clientX, clientY);
+    preventDefault();
 });
-canvas.addEventListener('touchmove', function (e) { return paint(e.touches[0].clientX, e.touches[0].clientY); });
+canvas.addEventListener('touchmove', function (e) {
+    paint(e.touches[0].clientX, e.touches[0].clientY);
+    e.preventDefault();
+});
 clearBtn.addEventListener('click', function () {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     loadImage();
