@@ -1,3 +1,5 @@
+import allImages from './Images';
+
 const canvas = document.getElementsByTagName('canvas')[0];
 const ctx = canvas.getContext('2d')!;
 const clearBtn = document.getElementById('clear')!;
@@ -8,8 +10,7 @@ const image = new Image();
 const allColors = ['red', 'orange', 'yellow', 'limegreen', 'blue', 'pink', 'purple', 'brown', 'white', 'black'];
 let selectedColor = 'red';
 
-const allImages = ['unicorn.png', 'mermaid.png', 'tiana.png', 'bear.png', 'deer.png'];
-let selectedImage = 'unicorn.png';
+let selectedImage = allImages[0];
 
 let dragging = false;
 
@@ -60,7 +61,7 @@ changeImageBtn.addEventListener('click', () => {
 
 
 function loadImage() {
-  image.src = 'images/' + selectedImage;
+  image.src = selectedImage;
   image.addEventListener('load', () => {
     canvas.width = image.width;
     canvas.height = image.height;
