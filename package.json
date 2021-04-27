@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "parcel index.html -d docs"
+    "start": "parcel index.html",
+    "build": "rimraf docs && parcel build index.html -d docs"
   },
   "repository": {
     "type": "git",
@@ -18,6 +19,7 @@
   "homepage": "https://github.com/jmhdez/colors#readme",
   "devDependencies": {
     "parcel-bundler": "^1.12.5",
+    "rimraf": "^3.0.2",
     "typescript": "^4.2.4"
   }
 }
