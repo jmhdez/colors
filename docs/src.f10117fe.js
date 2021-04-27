@@ -117,74 +117,215 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
-var bundleURL = null;
+})({"images/unicorn.png":[function(require,module,exports) {
+module.exports = "/unicorn.2f14e6f5.png";
+},{}],"images/mermaid.png":[function(require,module,exports) {
+module.exports = "/mermaid.0d1a8b6c.png";
+},{}],"images/tiana.png":[function(require,module,exports) {
+module.exports = "/tiana.8e5302f5.png";
+},{}],"images/bear.png":[function(require,module,exports) {
+module.exports = "/bear.d4a65f6e.png";
+},{}],"images/deer.png":[function(require,module,exports) {
+module.exports = "/deer.efac47c7.png";
+},{}],"src/Images.ts":[function(require,module,exports) {
+"use strict";
 
-function getBundleURLCached() {
-  if (!bundleURL) {
-    bundleURL = getBundleURL();
-  }
+var __importDefault = this && this.__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
+};
 
-  return bundleURL;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var unicorn_png_1 = __importDefault(require("../images/unicorn.png"));
+
+var mermaid_png_1 = __importDefault(require("../images/mermaid.png"));
+
+var tiana_png_1 = __importDefault(require("../images/tiana.png"));
+
+var bear_png_1 = __importDefault(require("../images/bear.png"));
+
+var deer_png_1 = __importDefault(require("../images/deer.png"));
+
+exports.default = [unicorn_png_1.default, mermaid_png_1.default, tiana_png_1.default, bear_png_1.default, deer_png_1.default];
+},{"../images/unicorn.png":"images/unicorn.png","../images/mermaid.png":"images/mermaid.png","../images/tiana.png":"images/tiana.png","../images/bear.png":"images/bear.png","../images/deer.png":"images/deer.png"}],"src/index.ts":[function(require,module,exports) {
+"use strict";
+
+var __importDefault = this && this.__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var Images_1 = __importDefault(require("./Images"));
+
+var canvas = document.getElementsByTagName('canvas')[0];
+var ctx = canvas.getContext('2d');
+var clearBtn = document.getElementById('clear');
+var changeImageBtn = document.getElementById('changeimage');
+var image = new Image();
+var allColors = ['red', 'orange', 'yellow', 'limegreen', 'blue', 'pink', 'purple', 'brown', 'white', 'black'];
+var selectedColor = 'red';
+var selectedImage = Images_1.default[0];
+var dragging = false;
+loadImage();
+setupColors();
+canvas.addEventListener('mousedown', function (_a) {
+  var clientX = _a.clientX,
+      clientY = _a.clientY,
+      preventDefault = _a.preventDefault;
+  beginPaint(clientX, clientY);
+  preventDefault();
+});
+canvas.addEventListener('touchstart', function (e) {
+  beginPaint(e.touches[0].clientX, e.touches[0].clientY);
+  e.preventDefault();
+});
+canvas.addEventListener('mouseup', function (_a) {
+  var clientX = _a.clientX,
+      clientY = _a.clientY,
+      preventDefault = _a.preventDefault;
+  endPaint(clientX, clientY);
+  preventDefault();
+});
+canvas.addEventListener('touchend', function (e) {
+  endPaint(e.touches[0].clientX, e.touches[0].clientY);
+  e.preventDefault();
+});
+canvas.addEventListener('mousemove', function (_a) {
+  var clientX = _a.clientX,
+      clientY = _a.clientY,
+      preventDefault = _a.preventDefault;
+  paint(clientX, clientY);
+  preventDefault();
+});
+canvas.addEventListener('touchmove', function (e) {
+  paint(e.touches[0].clientX, e.touches[0].clientY);
+  e.preventDefault();
+});
+clearBtn.addEventListener('click', function () {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  loadImage();
+});
+changeImageBtn.addEventListener('click', function () {
+  var newImage = '';
+
+  do {
+    var index = Math.floor(Math.random() * Images_1.default.length);
+    newImage = Images_1.default[index];
+  } while (newImage === selectedImage);
+
+  selectedImage = newImage;
+  loadImage();
+});
+
+function loadImage() {
+  image.src = selectedImage;
+  image.addEventListener('load', function () {
+    canvas.width = image.width;
+    canvas.height = image.height;
+    ctx.drawImage(image, 0, 0);
+  });
 }
 
-function getBundleURL() {
-  // Attempt to find the URL of the current script and use that as the base URL
-  try {
-    throw new Error();
-  } catch (err) {
-    var matches = ('' + err.stack).match(/(https?|file|ftp|chrome-extension|moz-extension):\/\/[^)\n]+/g);
+function setupColors() {
+  var ul = document.querySelector('.colors');
 
-    if (matches) {
-      return getBaseURL(matches[0]);
-    }
-  }
+  var _loop_1 = function _loop_1(color) {
+    var li = document.createElement('li');
+    li.style.backgroundColor = color;
+    li.addEventListener('click', function (_) {
+      selectedColor = color; // Soportar Safari antiguo es lo que tiene
 
-  return '/';
-}
+      var colors = document.querySelectorAll('ul.colors li');
 
-function getBaseURL(url) {
-  return ('' + url).replace(/^((?:https?|file|ftp|chrome-extension|moz-extension):\/\/.+)?\/[^/]+(?:\?.*)?$/, '$1') + '/';
-}
+      for (var i = 0; i < colors.length; i++) {
+        colors[i].classList.remove('selected');
+      }
 
-exports.getBundleURL = getBundleURLCached;
-exports.getBaseURL = getBaseURL;
-},{}],"node_modules/parcel-bundler/src/builtins/css-loader.js":[function(require,module,exports) {
-var bundle = require('./bundle-url');
-
-function updateLink(link) {
-  var newLink = link.cloneNode();
-
-  newLink.onload = function () {
-    link.remove();
+      li.classList.add('selected');
+    });
+    ul.appendChild(li);
   };
 
-  newLink.href = link.href.split('?')[0] + '?' + Date.now();
-  link.parentNode.insertBefore(newLink, link.nextSibling);
-}
+  for (var _i = 0, allColors_1 = allColors; _i < allColors_1.length; _i++) {
+    var color = allColors_1[_i];
 
-var cssTimeout = null;
-
-function reloadCSS() {
-  if (cssTimeout) {
-    return;
+    _loop_1(color);
   }
 
-  cssTimeout = setTimeout(function () {
-    var links = document.querySelectorAll('link[rel="stylesheet"]');
-
-    for (var i = 0; i < links.length; i++) {
-      if (bundle.getBaseURL(links[i].href) === bundle.getBundleURL()) {
-        updateLink(links[i]);
-      }
-    }
-
-    cssTimeout = null;
-  }, 50);
+  selectedColor = allColors[0];
+  document.querySelector('ul.colors li').classList.add('selected');
 }
 
-module.exports = reloadCSS;
-},{"./bundle-url":"node_modules/parcel-bundler/src/builtins/bundle-url.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+var lastX = undefined;
+var lastY = undefined;
+
+function toCanvasPoint(clientX, clientY) {
+  var _a = canvas.getBoundingClientRect(),
+      left = _a.left,
+      top = _a.top,
+      width = _a.width;
+
+  var unscaledX = clientX - left;
+  var unscaledY = clientY - top; // El canvas tiene un max-width: 100% por lo que puede estar escalado
+
+  var scaleRatio = image.width / width;
+  var x = unscaledX * scaleRatio;
+  var y = unscaledY * scaleRatio;
+  return {
+    x: x,
+    y: y
+  };
+}
+
+function beginPaint(clientX, clientY) {
+  dragging = true;
+
+  var _a = toCanvasPoint(clientX, clientY),
+      x = _a.x,
+      y = _a.y;
+
+  lastX = x;
+  lastY = y;
+}
+
+function endPaint(_clientX, _clientY) {
+  dragging = false;
+  lastX = undefined;
+  lastY = undefined;
+}
+
+function paint(clientX, clientY) {
+  if (!dragging) return;
+
+  var _a = toCanvasPoint(clientX, clientY),
+      x = _a.x,
+      y = _a.y;
+
+  ctx.fillStyle = selectedColor;
+  ctx.lineWidth = 20;
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+  ctx.strokeStyle = selectedColor;
+  ctx.beginPath();
+  lastX = lastX || x;
+  lastY = lastY || y;
+  ctx.moveTo(lastX, lastY);
+  ctx.lineTo(x, y);
+  ctx.stroke();
+  ctx.drawImage(image, 0, 0);
+  lastX = x;
+  lastY = y;
+}
+},{"./Images":"src/Images.ts"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -212,7 +353,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53796" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53883" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
@@ -388,5 +529,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["node_modules/parcel-bundler/src/builtins/hmr-runtime.js"], null)
-//# sourceMappingURL=/index.js.map
+},{}]},{},["node_modules/parcel-bundler/src/builtins/hmr-runtime.js","src/index.ts"], null)
+//# sourceMappingURL=/src.f10117fe.js.map
